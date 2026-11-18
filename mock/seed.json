@@ -1,0 +1,338 @@
+{
+  "projects": [
+    {
+      "key": "WEB",
+      "name": "Web Storefront"
+    },
+    {
+      "key": "MOB",
+      "name": "Mobile App"
+    }
+  ],
+  "versions": {
+    "WEB": [
+      {
+        "name": "2.3.0",
+        "released": true
+      },
+      {
+        "name": "2.4.0",
+        "released": false
+      },
+      {
+        "name": "2.5.0",
+        "released": false
+      }
+    ],
+    "MOB": [
+      {
+        "name": "1.8.0",
+        "released": false
+      }
+    ]
+  },
+  "issues": [
+    {
+      "key": "WEB-101",
+      "project": "WEB",
+      "fixVersion": "2.4.0",
+      "type": "Story",
+      "status": "Done",
+      "priority": "High",
+      "assignee": "Priya Shah",
+      "summary": "Checkout: save card for later",
+      "labels": [],
+      "blockedBy": [],
+      "comments": []
+    },
+    {
+      "key": "WEB-102",
+      "project": "WEB",
+      "fixVersion": "2.4.0",
+      "type": "Story",
+      "status": "Done",
+      "priority": "Medium",
+      "assignee": "Marco Rossi",
+      "summary": "Order history filters",
+      "labels": [],
+      "blockedBy": [],
+      "comments": []
+    },
+    {
+      "key": "WEB-103",
+      "project": "WEB",
+      "fixVersion": "2.4.0",
+      "type": "Story",
+      "status": "In Review",
+      "priority": "Medium",
+      "assignee": "Aiko Tanaka",
+      "summary": "Dark mode for account pages",
+      "labels": [],
+      "blockedBy": [
+        "WEB-108"
+      ],
+      "comments": []
+    },
+    {
+      "key": "WEB-104",
+      "project": "WEB",
+      "fixVersion": "2.4.0",
+      "type": "Story",
+      "status": "In Progress",
+      "priority": "High",
+      "assignee": "Sam Okafor",
+      "summary": "Gift card redemption",
+      "labels": [],
+      "blockedBy": [],
+      "comments": []
+    },
+    {
+      "key": "WEB-105",
+      "project": "WEB",
+      "fixVersion": "2.4.0",
+      "type": "Task",
+      "status": "Done",
+      "priority": "Low",
+      "assignee": null,
+      "summary": "Upgrade analytics SDK",
+      "labels": [],
+      "blockedBy": [],
+      "comments": []
+    },
+    {
+      "key": "WEB-106",
+      "project": "WEB",
+      "fixVersion": "2.4.0",
+      "type": "Bug",
+      "status": "Done",
+      "priority": "High",
+      "assignee": "Priya Shah",
+      "summary": "Cart total wrong with mixed currencies",
+      "labels": [],
+      "blockedBy": [],
+      "comments": []
+    },
+    {
+      "key": "WEB-107",
+      "project": "WEB",
+      "fixVersion": "2.4.0",
+      "type": "Bug",
+      "status": "Done",
+      "priority": "Medium",
+      "assignee": "Marco Rossi",
+      "summary": "Search box loses focus on mobile Safari",
+      "labels": [],
+      "blockedBy": [],
+      "comments": []
+    },
+    {
+      "key": "WEB-108",
+      "project": "WEB",
+      "fixVersion": "2.4.0",
+      "type": "Bug",
+      "status": "Blocked",
+      "priority": "Highest",
+      "assignee": "Aiko Tanaka",
+      "summary": "Payment provider timeout on 3DS challenge",
+      "labels": [],
+      "blockedBy": [],
+      "comments": []
+    },
+    {
+      "key": "WEB-109",
+      "project": "WEB",
+      "fixVersion": "2.4.0",
+      "type": "Bug",
+      "status": "To Do",
+      "priority": "Medium",
+      "assignee": "Sam Okafor",
+      "summary": "Broken image on empty wishlist",
+      "labels": [],
+      "blockedBy": [],
+      "comments": []
+    },
+    {
+      "key": "WEB-110",
+      "project": "WEB",
+      "fixVersion": "2.4.0",
+      "type": "Story",
+      "status": "To Do",
+      "priority": "Low",
+      "assignee": null,
+      "summary": "Recently viewed carousel",
+      "labels": [],
+      "blockedBy": [],
+      "comments": []
+    },
+    {
+      "key": "WEB-111",
+      "project": "WEB",
+      "fixVersion": "2.4.0",
+      "type": "Bug",
+      "status": "In Progress",
+      "priority": "Blocker",
+      "assignee": "Priya Shah",
+      "summary": "Session expires during checkout",
+      "labels": [],
+      "blockedBy": [],
+      "comments": []
+    },
+    {
+      "key": "WEB-112",
+      "project": "WEB",
+      "fixVersion": "2.4.0",
+      "type": "Task",
+      "status": "Done",
+      "priority": "Medium",
+      "assignee": "Marco Rossi",
+      "summary": "Release feature flags cleanup",
+      "labels": [],
+      "blockedBy": [],
+      "comments": []
+    },
+    {
+      "key": "WEB-113",
+      "project": "WEB",
+      "fixVersion": "2.4.0",
+      "type": "Story",
+      "status": "Done",
+      "priority": "Medium",
+      "assignee": "Aiko Tanaka",
+      "summary": "Address autocomplete",
+      "labels": [],
+      "blockedBy": [],
+      "comments": []
+    },
+    {
+      "key": "WEB-114",
+      "project": "WEB",
+      "fixVersion": "2.4.0",
+      "type": "Bug",
+      "status": "Done",
+      "priority": "Low",
+      "assignee": "Sam Okafor",
+      "summary": "Typo in password reset email",
+      "labels": [],
+      "blockedBy": [],
+      "comments": []
+    },
+    {
+      "key": "WEB-115",
+      "project": "WEB",
+      "fixVersion": "2.5.0",
+      "type": "Story",
+      "status": "To Do",
+      "priority": "Medium",
+      "assignee": "Priya Shah",
+      "summary": "Product comparison view",
+      "labels": [],
+      "blockedBy": [],
+      "comments": []
+    },
+    {
+      "key": "WEB-116",
+      "project": "WEB",
+      "fixVersion": "2.5.0",
+      "type": "Story",
+      "status": "To Do",
+      "priority": "High",
+      "assignee": "Marco Rossi",
+      "summary": "One-click reorder",
+      "labels": [],
+      "blockedBy": [],
+      "comments": []
+    },
+    {
+      "key": "WEB-117",
+      "project": "WEB",
+      "fixVersion": "2.5.0",
+      "type": "Bug",
+      "status": "To Do",
+      "priority": "Low",
+      "assignee": "Aiko Tanaka",
+      "summary": "Footer links misaligned on tablets",
+      "labels": [],
+      "blockedBy": [],
+      "comments": []
+    },
+    {
+      "key": "MOB-101",
+      "project": "MOB",
+      "fixVersion": "1.8.0",
+      "type": "Story",
+      "status": "Done",
+      "priority": "High",
+      "assignee": "Priya Shah",
+      "summary": "Push notification preferences",
+      "labels": [],
+      "blockedBy": [],
+      "comments": []
+    },
+    {
+      "key": "MOB-102",
+      "project": "MOB",
+      "fixVersion": "1.8.0",
+      "type": "Story",
+      "status": "Done",
+      "priority": "Medium",
+      "assignee": "Marco Rossi",
+      "summary": "Biometric login",
+      "labels": [],
+      "blockedBy": [],
+      "comments": []
+    },
+    {
+      "key": "MOB-103",
+      "project": "MOB",
+      "fixVersion": "1.8.0",
+      "type": "Bug",
+      "status": "Done",
+      "priority": "High",
+      "assignee": "Aiko Tanaka",
+      "summary": "Crash when rotating on photo upload",
+      "labels": [],
+      "blockedBy": [],
+      "comments": []
+    },
+    {
+      "key": "MOB-104",
+      "project": "MOB",
+      "fixVersion": "1.8.0",
+      "type": "Bug",
+      "status": "In Progress",
+      "priority": "Medium",
+      "assignee": "Sam Okafor",
+      "summary": "Offline banner flickers",
+      "labels": [],
+      "blockedBy": [],
+      "comments": []
+    },
+    {
+      "key": "MOB-105",
+      "project": "MOB",
+      "fixVersion": "1.8.0",
+      "type": "Task",
+      "status": "Done",
+      "priority": "Low",
+      "assignee": null,
+      "summary": "Bump minimum iOS to 16",
+      "labels": [],
+      "blockedBy": [],
+      "comments": []
+    },
+    {
+      "key": "MOB-106",
+      "project": "MOB",
+      "fixVersion": "1.8.0",
+      "type": "Story",
+      "status": "In Review",
+      "priority": "Medium",
+      "assignee": "Priya Shah",
+      "summary": "Widget for order tracking",
+      "labels": [],
+      "blockedBy": [],
+      "comments": []
+    }
+  ],
+  "pages": []
+}

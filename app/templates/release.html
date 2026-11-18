@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+{% block title %}{{ project }} {{ version }} readiness{% endblock %}
+{% block content %}
+<div class="title-row">
+  <h1>{{ project }} {{ version }}</h1>
+  <form method="post" action="{{ url_for('dashboard.publish', project=project, version=version) }}">
+    <button type="submit" class="primary">Publish release notes to Confluence</button>
+  </form>
+</div>
+
+<section class="kpis">
+  <div class="card kpi ready"><span class="value">{{ score.percent_ready }}%</span><span class="label">ready</span>
+    <div class="meter"><div style="width: {{ score.percent_ready }}%"></div></div></div>
+  <div class="card kpi"><span class="value">{{ score.done }}/{{ score.total }}</span><span class="label">done</span></div>
+  <div class="card kpi"><span class="value">{{ score.in_progress }}</span><span class="label">in progress</span></div>
+  <div class="card kpi"><span class="value">{{ score.to_do }}</span><span class="label">to do</span></div>
+  <div class="card kpi {% if score.blockers %}alert{% endif %}"><span class="value">{{ score.blockers|length }}</span><span class="label">blockers</span></div>
+</section>
+
+<section class="charts">
+  <div class="card"><h2>By status</h2><canvas id="chart-status"></canvas></div>
+  <div class="card"><h2>By priority</h2><canvas id="chart-priority"></canvas></div>
+  <div class="card"><h2>By assignee</h2><canvas id="chart-assignee"></canvas></div>
+</section>
+
+{% macro issue_table(rows) %}
+<table class="issues">
+  <thead><tr><th>Key</th><th>Summary</th><th>Type</th><th>Priority</th><th>Assignee</th><th>Status</th><th>Actions</th></tr></thead>
+  <tbody>
+  {% for i in rows %}
+    <tr>
+      <td><a href="{{ browse_url(i.key) }}" target="_blank">{{ i.key }}</a></td>
+      <td>{{ i.summary }}{% if i.blocked_by %}<br><small>Blocked by {{ i.blocked_by|join(', ') }}</small>{% endif %}</td>
+      <td>{{ i.issue_type }}</td>
+      <td>{{ i.priority }}</td>
+      <td>{{ i.assignee }}</td>
+      <td><span class="status {{ i.status_category }}{% if "block" in i.status.lower() %} blocked{% endif %}">{{ i.status }}</span></td>
+      <td class="actions">
+        <form method="post" action="{{ url_for('dashboard.transition', key=i.key) }}">
+          <input type="hidden" name="next" value="{{ request.path }}">
+          <select name="status" data-key="{{ i.key }}" class="transition-select" required>
+            <option value="">Move to…</option>
+          </select>
+          <button type="submit">Move</button>
+        </form>
+        <form method="post" action="{{ url_for('dashboard.comment', key=i.key) }}">
+          <input type="hidden" name="next" value="{{ request.path }}">
+          <input name="body" placeholder="Add a comment" required>
+          <button type="submit">Comment</button>
+        </form>
+      </td>
+    </tr>
+  {% else %}
+    <tr><td colspan="7"><em>None</em></td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endmacro %}
+
+<section class="card">
+  <h2>Blockers</h2>
+  {{ issue_table(score.blockers) }}
+</section>
+
+<section class="card">
+  <h2>Release notes preview</h2>
+  <div class="notes">
+    <div><h3>Features ({{ notes.features|length }})</h3><ul>{% for i in notes.features %}<li>{{ i.key }} {{ i.summary }}</li>{% else %}<li><em>None</em></li>{% endfor %}</ul></div>
+    <div><h3>Bug fixes ({{ notes.bug_fixes|length }})</h3><ul>{% for i in notes.bug_fixes %}<li>{{ i.key }} {{ i.summary }}</li>{% else %}<li><em>None</em></li>{% endfor %}</ul></div>
+    <div><h3>Known issues ({{ notes.known_issues|length }})</h3><ul>{% for i in notes.known_issues %}<li>{{ i.key }} {{ i.summary }}</li>{% else %}<li><em>None</em></li>{% endfor %}</ul></div>
+  </div>
+</section>
+
+<section class="card">
+  <h2>All issues ({{ issues|length }})</h2>
+  {{ issue_table(issues) }}
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.js"></script>
+<script>
+  // Charts are optional: if the CDN is unreachable the rest of the page keeps working.
+  const charts = window.Chart ? {{ charts|tojson }} : {};
+  const palette = ["#0c66e4", "#6e5dc6", "#2898bd", "#e56910", "#1f845a", "#e2b203", "#ae4787", "#626f86"];
+  // Statuses and priorities get colors that mean something; anything else falls back to the palette.
+  const meaning = {
+    "Done": "#1f845a", "In Progress": "#0c66e4", "In Review": "#6e5dc6", "Blocked": "#c9372c", "To Do": "#8590a2",
+    "Blocker": "#ae2e24", "Highest": "#c9372c", "High": "#e56910", "Medium": "#e2b203", "Low": "#8590a2", "Lowest": "#b3b9c4",
+  };
+  for (const [name, counts] of Object.entries(charts)) {
+    new Chart(document.getElementById(`chart-${name}`), {
+      type: name === "assignee" ? "bar" : "doughnut",
+      data: {
+        labels: Object.keys(counts),
+        datasets: [{
+          data: Object.values(counts),
+          backgroundColor: Object.keys(counts).map((label, n) =>
+            name === "assignee" ? "#0c66e4" : meaning[label] || palette[n % palette.length]),
+        }],
+      },
+      options: {
+        indexAxis: name === "assignee" ? "y" : "x",
+        plugins: { legend: { display: name !== "assignee", position: "bottom" } },
+        scales: name === "assignee" ? { x: { ticks: { precision: 0 } } } : {},
+      },
+    });
+  }
+
+  // Load the valid transitions for an issue the first time its dropdown is used.
+  document.querySelectorAll(".transition-select").forEach((select) => {
+    select.addEventListener("focus", async () => {
+      if (select.dataset.loaded) return;
+      select.dataset.loaded = "1";
+      const res = await fetch(`/api/issue/${select.dataset.key}/transitions`);
+      for (const t of await res.json()) {
+        select.add(new Option(t.name === t.to ? t.to : `${t.name} → ${t.to}`, t.to));
+      }
+    }, { once: true });
+  });
+</script>
+{% endblock %}
